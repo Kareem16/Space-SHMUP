@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Main : MonoBehaviour {
+public class Main : MonoBehaviour
+{
     static public Main S;
     [Header("Set in Inspector")]
     public GameObject[] prefabEnemies; // Array of Enemy prefabs
@@ -18,7 +19,8 @@ public class Main : MonoBehaviour {
         // Invoke SpawnEnemy() once (in 2 seconds, based on default values)
         Invoke("SpawnEnemy", 1f / enemySpawnPerSecond); // a
     }
-    public void SpawnEnemy() {
+    public void SpawnEnemy()
+    {
 
         // Pick a random Enemy prefab to instantiate
         int ndx = Random.Range(0, prefabEnemies.Length); // b
@@ -29,14 +31,6 @@ public class Main : MonoBehaviour {
         { // e
             enemyPadding = Mathf.Abs(go.GetComponent<BoundsCheck>().radius);
         }
-      
-        public void DelayedRestart(float delay) {
-
-        Invoke("Restart", delay);
-    }
-        public void Restart() {
-        SceneManager.LoadScene("_Scene_0");
-    }
         // Set the initial position for the spawned Enemy // f
         Vector3 pos = Vector3.zero;
         float xMin = -bndCheck.camWidth + enemyPadding;
@@ -47,13 +41,14 @@ public class Main : MonoBehaviour {
         // Invoke SpawnEnemy() again
         Invoke("SpawnEnemy", 1f / enemySpawnPerSecond);
     }
-        // Use this for initialization
-        void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    public void DelayedRestart(float delay)
+    {
+
+        Invoke("Restart", delay);
+    }
+    public void Restart()
+    {
+        SceneManager.LoadScene("_Scene_0");
+    }
+
 }

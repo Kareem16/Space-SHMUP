@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Hero : MonoBehaviour {
+public class Hero : MonoBehaviour
+{
+
 
     static public Hero S; // Singleton // a
 
@@ -27,15 +29,17 @@ public class Hero : MonoBehaviour {
         {
             Debug.LogError("Hero.Awake() - Attempted to assign second Hero.S!");
         }
-    } 
+    }
 
     // Use this for initialization
-    void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
+    void Start()
+    {
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
         // Pull in information from the Input class
         float xAxis = Input.GetAxis("Horizontal"); // b
         float yAxis = Input.GetAxis("Vertical"); // b
@@ -47,37 +51,47 @@ public class Hero : MonoBehaviour {
         // Rotate the ship to make it feel more dynamic // c
         transform.rotation = Quaternion.Euler(yAxis * pitchMult, xAxis * rollMult, 0);
     }
-    void OnTrioggerEnter(Collider other) {
+    void OnTrioggerEnter(Collider other)
+    {
         Transform rootT = other.gameObject.transform.root;
         GameObject go = rootT.gameObject;
         //print("Triggered: " +go.name);
 
-        if (go == lastTriggerGo) {
+        if (go == lastTriggerGo)
+        {
             return;
         }
         lastTriggerGo = go;
 
-        if (go.tag == "Enemy") {
+        if (go.tag == "Enemy")
+        {
             shieldLevel--;
             Destroy(go);
-        } else {
+        }
+        else
+        {
             print("Triggered by non-Enemy: " + go.name);
         }
+    }
 
-        public float shieldLevel {
-            get {
+    public float shieldLevel
+    {
+        get
+        {
             return (_shieldLevel);
 
-        }    
-        set {
+        }
+        set
+        {
             _shieldLevel = Mathf.Min(value, 4);
-            if (value<0) {
+            if (value < 0)
+            {
                 Destroy(this.gameObject);
+                // Tell Main.S to restart the game after a delay
                 Main.S.DelayedRestart(gameRestartDelay);
             }
         }
     }
-
-    }
 }
+
 	
