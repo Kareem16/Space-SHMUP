@@ -7,14 +7,14 @@ public class Enemy : MonoBehaviour {
     public float speed = 10f;
     public float fireRate = 0.3f;
     public float health = 10;
-    public int score = 100;
+    public int score = 100; // Points earned for destroying this 
 
-    private BoundsCheck bndCheck;
+    private BoundsCheck bndCheck;                               // a
 
     private void Awake() {
         bndCheck = GetComponent<BoundsCheck>();
     }
-
+    //This is a Property: A method that acts like a field       // a
     public Vector3 pos {
         get {
             return (this.transform.position);
@@ -28,22 +28,32 @@ public class Enemy : MonoBehaviour {
 	void Start () {
 		
 	}
-	
-	// Update is called once per frame
-	void Update () {
-        Move();
 
+    // Update is called once per frame
+    void Update() {
+        Move();
         if ( bndCheck != null && bndCheck.offDown ) {
-            {
                 // We're off the bottom, so destroy this GameObject
                 Destroy(gameObject);
             }
         }
-	}
+
 
     public virtual void Move() {
         Vector3 tempPos = pos;
         tempPos.y -= speed * Time.deltaTime;
         pos = tempPos;
     }
-}
+
+    void OnCollisionEnter(Collision coll) {
+        GameObject otherGO = coll.gameObject;
+        if (otherGO.tag == "ProjectileHero")
+        {
+            Destroy(otherGO);
+            Destroy(gameObject);
+        } else {
+
+            print( "Enemy hit by non-ProjectileHero: " + otherGO.name);
+        }
+        }
+    }

@@ -2,6 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// To type the next 4 lines, start by typing /// and then Tab.
+/// <summary>
+/// Keeps a GameObject on screen.
+/// Note that this ONLY works for an orthographic Main Camera at [0, 0, 0].
+/// </summary>
 public class BoundsCheck : MonoBehaviour {
     [Header("Set in Inspector")]
     public float radius = 1f;
@@ -42,7 +47,9 @@ public class BoundsCheck : MonoBehaviour {
             offDown = true;
         }
 
-        isOnScreen = !(offRight || offLeft || offDown);
+        //transform.position = pos; (delete if not needed) 
+
+        isOnScreen = !(offRight || offLeft || offUp || offDown);
         if (keepOnScreen && !isOnScreen) {
             transform.position = pos;
             isOnScreen = true;
@@ -57,6 +64,7 @@ public class BoundsCheck : MonoBehaviour {
         Gizmos.DrawWireCube(Vector3.zero, boundSize);
 
     }
+
 	// Use this for initialization
 	void Start () {
 		
