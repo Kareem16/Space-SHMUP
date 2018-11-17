@@ -55,7 +55,8 @@ public class Hero : MonoBehaviour
         transform.rotation = Quaternion.Euler(yAxis * pitchMult, xAxis * rollMult, 0);
 
         //Allow the ship to fire
-        if (Input.GetKeyDown(KeyCode.Space)) {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
             TempFire();
         }
     }
@@ -68,37 +69,47 @@ public class Hero : MonoBehaviour
         rigidB.velocity = Vector3.up * projectileSpeed;
     }
 
-    void OnTrioggerEnter(Collider other) {
+    void OnTriggerEnter(Collider other)
+    {
         Transform rootT = other.gameObject.transform.root;
         GameObject go = rootT.gameObject;
         //print("Triggered: " +go.name);
 
         // Make sure it's not the same triggering go as last time 
-        if (go == lastTriggerGo) {
+        if (go == lastTriggerGo)
+        {
             return;
         }
         lastTriggerGo = go;
 
-        if (go.tag == "Enemy") { // If the shield was triggered by an enemy
+        if (go.tag == "Enemy")
+        { // If the shield was triggered by an enemy
             shieldLevel--;
             Destroy(go);
-        } else {
+        }
+        else
+        {
             print("Triggered by non-Enemy: " + go.name);
         }
-      }
     }
 
-        public float shieldLevel {
-        get {
+
+    public float shieldLevel
+    {
+        get
+        {
             return (_shieldLevel);
         }
-        set {
+        set
+        {
             _shieldLevel = Mathf.Min(value, 4);
             // If the shield is going to be less than zero
-            if (value < 0) { 
+            if (value < 0)
+            {
                 Destroy(this.gameObject);
                 // Tell Main.S to restart the game after a delay
                 Main.S.DelayedRestart(gameRestartDelay);
             }
         }
     }
+}
